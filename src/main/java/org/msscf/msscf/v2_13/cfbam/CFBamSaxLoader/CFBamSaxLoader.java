@@ -7,7 +7,7 @@
  *	
  *	MSS Code Factory CFBam 2.13 Business Application Model
  *	
- *	Copyright 2020-2021 Mark Stephen Sobkow
+ *	Copyright 2020 Mark Stephen Sobkow
  *	
  *		This file is part of MSS Code Factory.
  *	
@@ -51,10 +51,10 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.xerces.xni.grammars.Grammar;
 import org.xml.sax.*;
 
 import org.msscf.msscf.v2_13.cflib.CFLib.*;
+import org.msscf.msscf.v2_13.cflib.CFLib.xml.*;
 import org.msscf.msscf.v2_13.cfsec.CFSec.*;
 import org.msscf.msscf.v2_13.cfint.CFInt.*;
 import org.msscf.msscf.v2_13.cfbam.CFBam.*;
@@ -68,20 +68,19 @@ public class CFBamSaxLoader
 {
 
 	// The namespace URI of the supported schema
-	public final static String	SCHEMA_XMLNS = "http://msscf.org:8088/msscf/2.0.13/cfbamloader";
+	public final static String	SCHEMA_XMLNS = "uri://org.msscf/msscf/2.0.13/cfbamloader";
 
 	// The source for loading the supported schema
-	public final static String	SCHEMA_URI = "http://msscf.org:8088/msscf/2.0.13/xsd/cfbam-structured.xsd";
+	public final static String	SCHEMA_URI = "/opt/msscf/2.0.13/xsd/cfbam-structured.xsd";
 	public final static String	SCHEMA_ROOT_URI = "/xsd/cfbam-structured.xsd";
-	public final static String CFSEC_XMLNS = "http://msscf.org:8088/msscf/2.0.13/cfsecloader";
-	public final static String CFSEC_URI = "http://msscf.org:8088/msscf/2.0.13/xsd/cfsec-structured.xsd";
+	public final static String CFSEC_XMLNS = "uri://org.msscf/msscf/2.0.13/cfsecloader";
+	public final static String CFSEC_URI = "/opt/msscf/2.0.13/xsd/cfsec-structured.xsd";
 	public final static String CFSEC_ROOT_URI = "/xsd/cfsec-structured.xsd";
 
-	public final static String CFINT_XMLNS = "http://msscf.org:8088/msscf/2.0.13/cfintloader";
-	public final static String CFINT_URI = "http://msscf.org:8088/msscf/2.0.13/xsd/cfint-structured.xsd";
+	public final static String CFINT_XMLNS = "uri://org.msscf/msscf/2.0.13/cfintloader";
+	public final static String CFINT_URI = "/opt/msscf/2.0.13/xsd/cfint-structured.xsd";
 	public final static String CFINT_ROOT_URI = "/xsd/cfint-structured.xsd";
 
-	protected Grammar myGrammar = null;
 
 	// The schema instance to load in to
 
@@ -135,6 +134,30 @@ public class CFBamSaxLoader
 	private LoaderBehaviourEnum dateColLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum dateDefLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum dateTypeLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash128ColLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash128DefLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash128GenLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash128TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash160ColLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash160DefLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash160GenLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash160TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash224ColLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash224DefLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash224GenLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash224TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash256ColLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash256DefLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash256GenLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash256TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash384ColLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash384DefLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash384GenLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash384TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash512ColLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash512DefLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash512GenLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum dbKeyHash512TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum delDepLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum delSubDep1LoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum delSubDep2LoaderBehaviour = LoaderBehaviourEnum.Update;
@@ -254,6 +277,10 @@ public class CFBamSaxLoader
 	private LoaderBehaviourEnum uInt64DefLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum uInt64TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum uRLProtocolLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum uuid6ColLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum uuid6DefLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum uuid6GenLoaderBehaviour = LoaderBehaviourEnum.Update;
+	private LoaderBehaviourEnum uuid6TypeLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum uuidColLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum uuidDefLoaderBehaviour = LoaderBehaviourEnum.Update;
 	private LoaderBehaviourEnum uuidGenLoaderBehaviour = LoaderBehaviourEnum.Update;
@@ -266,125 +293,12 @@ public class CFBamSaxLoader
 	public CFBamSaxLoader() {
 		super();
 		setRootElementHandler( getSaxRootHandler() );
-		if( myGrammar == null ) {
-			InputStream input;
-			File file = new File( SCHEMA_URI );
-			if( file.exists() ) {
-				try {
-					input = new FileInputStream( file );
-				}
-				catch( Exception e ) {
-					input = null;
-				}
-				if( input != null ) {
-					myGrammar = addToGrammarPool( SCHEMA_URI, input );
-				}
-			}
-			else {
-				input = getClass().getResourceAsStream( SCHEMA_ROOT_URI );
-				if( input != null ) {
-					myGrammar = addToGrammarPool( SCHEMA_ROOT_URI, input );
-				}
-			}
-			file = new File( CFSEC_URI );
-			if( file.exists() ) {
-				try {
-					input = new FileInputStream( file );
-				}
-				catch( Exception e ) {
-					input = null;
-				}
-				if( input != null ) {
-					addToGrammarPool( CFSEC_URI, input );
-				}
-			}
-			else {
-				input = getClass().getResourceAsStream( CFSEC_ROOT_URI );
-				if( input != null ) {
-					addToGrammarPool( CFSEC_ROOT_URI, input );
-				}
-			}
-			file = new File( CFINT_URI );
-			if( file.exists() ) {
-				try {
-					input = new FileInputStream( file );
-				}
-				catch( Exception e ) {
-					input = null;
-				}
-				if( input != null ) {
-					addToGrammarPool( CFINT_URI, input );
-				}
-			}
-			else {
-				input = getClass().getResourceAsStream( CFINT_ROOT_URI );
-				if( input != null ) {
-					addToGrammarPool( CFINT_ROOT_URI, input );
-				}
-			}
-		}
 		initParser();
 	}
 
 	public CFBamSaxLoader( ICFLibMessageLog logger ) {
 		super( logger );
 		setRootElementHandler( getSaxRootHandler() );
-		if( myGrammar == null ) {
-			InputStream input;
-			File file = new File( SCHEMA_URI );
-			if( file.exists() ) {
-				try {
-					input = new FileInputStream( file );
-				}
-				catch( Exception e ) {
-					input = null;
-				}
-				if( input != null ) {
-					myGrammar = addToGrammarPool( SCHEMA_URI, input );
-				}
-			}
-			else {
-				input = getClass().getResourceAsStream( SCHEMA_ROOT_URI );
-				if( input != null ) {
-					myGrammar = addToGrammarPool( SCHEMA_ROOT_URI, input );
-				}
-			}
-			file = new File( CFSEC_URI );
-			if( file.exists() ) {
-				try {
-					input = new FileInputStream( file );
-				}
-				catch( Exception e ) {
-					input = null;
-				}
-				if( input != null ) {
-					addToGrammarPool( CFSEC_URI, input );
-				}
-			}
-			else {
-				input = getClass().getResourceAsStream( CFSEC_ROOT_URI );
-				if( input != null ) {
-					addToGrammarPool( CFSEC_ROOT_URI, input );
-				}
-			}
-			file = new File( CFINT_URI );
-			if( file.exists() ) {
-				try {
-					input = new FileInputStream( file );
-				}
-				catch( Exception e ) {
-					input = null;
-				}
-				if( input != null ) {
-					addToGrammarPool( CFINT_URI, input );
-				}
-			}
-			else {
-				input = getClass().getResourceAsStream( CFINT_ROOT_URI );
-				if( input != null ) {
-					addToGrammarPool( CFINT_ROOT_URI, input );
-				}
-			}
 		}
 		initParser();
 	}
@@ -408,6 +322,30 @@ public class CFBamSaxLoader
 	private CFBamSaxLoaderDateCol dateColHandler = null;
 	private CFBamSaxLoaderDateDef dateDefHandler = null;
 	private CFBamSaxLoaderDateType dateTypeHandler = null;
+	private CFBamSaxLoaderDbKeyHash128Col dbKeyHash128ColHandler = null;
+	private CFBamSaxLoaderDbKeyHash128Def dbKeyHash128DefHandler = null;
+	private CFBamSaxLoaderDbKeyHash128Gen dbKeyHash128GenHandler = null;
+	private CFBamSaxLoaderDbKeyHash128Type dbKeyHash128TypeHandler = null;
+	private CFBamSaxLoaderDbKeyHash160Col dbKeyHash160ColHandler = null;
+	private CFBamSaxLoaderDbKeyHash160Def dbKeyHash160DefHandler = null;
+	private CFBamSaxLoaderDbKeyHash160Gen dbKeyHash160GenHandler = null;
+	private CFBamSaxLoaderDbKeyHash160Type dbKeyHash160TypeHandler = null;
+	private CFBamSaxLoaderDbKeyHash224Col dbKeyHash224ColHandler = null;
+	private CFBamSaxLoaderDbKeyHash224Def dbKeyHash224DefHandler = null;
+	private CFBamSaxLoaderDbKeyHash224Gen dbKeyHash224GenHandler = null;
+	private CFBamSaxLoaderDbKeyHash224Type dbKeyHash224TypeHandler = null;
+	private CFBamSaxLoaderDbKeyHash256Col dbKeyHash256ColHandler = null;
+	private CFBamSaxLoaderDbKeyHash256Def dbKeyHash256DefHandler = null;
+	private CFBamSaxLoaderDbKeyHash256Gen dbKeyHash256GenHandler = null;
+	private CFBamSaxLoaderDbKeyHash256Type dbKeyHash256TypeHandler = null;
+	private CFBamSaxLoaderDbKeyHash384Col dbKeyHash384ColHandler = null;
+	private CFBamSaxLoaderDbKeyHash384Def dbKeyHash384DefHandler = null;
+	private CFBamSaxLoaderDbKeyHash384Gen dbKeyHash384GenHandler = null;
+	private CFBamSaxLoaderDbKeyHash384Type dbKeyHash384TypeHandler = null;
+	private CFBamSaxLoaderDbKeyHash512Col dbKeyHash512ColHandler = null;
+	private CFBamSaxLoaderDbKeyHash512Def dbKeyHash512DefHandler = null;
+	private CFBamSaxLoaderDbKeyHash512Gen dbKeyHash512GenHandler = null;
+	private CFBamSaxLoaderDbKeyHash512Type dbKeyHash512TypeHandler = null;
 	private CFBamSaxLoaderDelDep delDepHandler = null;
 	private CFBamSaxLoaderDelSubDep1 delSubDep1Handler = null;
 	private CFBamSaxLoaderDelSubDep2 delSubDep2Handler = null;
@@ -850,6 +788,10 @@ public class CFBamSaxLoader
 	private CFBamSaxLoaderUInt64Def uInt64DefHandler = null;
 	private CFBamSaxLoaderUInt64Type uInt64TypeHandler = null;
 	private CFBamSaxLoaderURLProtocol uRLProtocolHandler = null;
+	private CFBamSaxLoaderUuid6Col uuid6ColHandler = null;
+	private CFBamSaxLoaderUuid6Def uuid6DefHandler = null;
+	private CFBamSaxLoaderUuid6Gen uuid6GenHandler = null;
+	private CFBamSaxLoaderUuid6Type uuid6TypeHandler = null;
 	private CFBamSaxLoaderUuidCol uuidColHandler = null;
 	private CFBamSaxLoaderUuidDef uuidDefHandler = null;
 	private CFBamSaxLoaderUuidGen uuidGenHandler = null;
@@ -982,6 +924,150 @@ public class CFBamSaxLoader
 			dateTypeHandler = new CFBamSaxLoaderDateType( this );
 		}
 		return( dateTypeHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash128Col getDbKeyHash128ColHandler() {
+		if( dbKeyHash128ColHandler == null ) {
+			dbKeyHash128ColHandler = new CFBamSaxLoaderDbKeyHash128Col( this );
+		}
+		return( dbKeyHash128ColHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash128Def getDbKeyHash128DefHandler() {
+		if( dbKeyHash128DefHandler == null ) {
+			dbKeyHash128DefHandler = new CFBamSaxLoaderDbKeyHash128Def( this );
+		}
+		return( dbKeyHash128DefHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash128Gen getDbKeyHash128GenHandler() {
+		if( dbKeyHash128GenHandler == null ) {
+			dbKeyHash128GenHandler = new CFBamSaxLoaderDbKeyHash128Gen( this );
+		}
+		return( dbKeyHash128GenHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash128Type getDbKeyHash128TypeHandler() {
+		if( dbKeyHash128TypeHandler == null ) {
+			dbKeyHash128TypeHandler = new CFBamSaxLoaderDbKeyHash128Type( this );
+		}
+		return( dbKeyHash128TypeHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash160Col getDbKeyHash160ColHandler() {
+		if( dbKeyHash160ColHandler == null ) {
+			dbKeyHash160ColHandler = new CFBamSaxLoaderDbKeyHash160Col( this );
+		}
+		return( dbKeyHash160ColHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash160Def getDbKeyHash160DefHandler() {
+		if( dbKeyHash160DefHandler == null ) {
+			dbKeyHash160DefHandler = new CFBamSaxLoaderDbKeyHash160Def( this );
+		}
+		return( dbKeyHash160DefHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash160Gen getDbKeyHash160GenHandler() {
+		if( dbKeyHash160GenHandler == null ) {
+			dbKeyHash160GenHandler = new CFBamSaxLoaderDbKeyHash160Gen( this );
+		}
+		return( dbKeyHash160GenHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash160Type getDbKeyHash160TypeHandler() {
+		if( dbKeyHash160TypeHandler == null ) {
+			dbKeyHash160TypeHandler = new CFBamSaxLoaderDbKeyHash160Type( this );
+		}
+		return( dbKeyHash160TypeHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash224Col getDbKeyHash224ColHandler() {
+		if( dbKeyHash224ColHandler == null ) {
+			dbKeyHash224ColHandler = new CFBamSaxLoaderDbKeyHash224Col( this );
+		}
+		return( dbKeyHash224ColHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash224Def getDbKeyHash224DefHandler() {
+		if( dbKeyHash224DefHandler == null ) {
+			dbKeyHash224DefHandler = new CFBamSaxLoaderDbKeyHash224Def( this );
+		}
+		return( dbKeyHash224DefHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash224Gen getDbKeyHash224GenHandler() {
+		if( dbKeyHash224GenHandler == null ) {
+			dbKeyHash224GenHandler = new CFBamSaxLoaderDbKeyHash224Gen( this );
+		}
+		return( dbKeyHash224GenHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash224Type getDbKeyHash224TypeHandler() {
+		if( dbKeyHash224TypeHandler == null ) {
+			dbKeyHash224TypeHandler = new CFBamSaxLoaderDbKeyHash224Type( this );
+		}
+		return( dbKeyHash224TypeHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash256Col getDbKeyHash256ColHandler() {
+		if( dbKeyHash256ColHandler == null ) {
+			dbKeyHash256ColHandler = new CFBamSaxLoaderDbKeyHash256Col( this );
+		}
+		return( dbKeyHash256ColHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash256Def getDbKeyHash256DefHandler() {
+		if( dbKeyHash256DefHandler == null ) {
+			dbKeyHash256DefHandler = new CFBamSaxLoaderDbKeyHash256Def( this );
+		}
+		return( dbKeyHash256DefHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash256Gen getDbKeyHash256GenHandler() {
+		if( dbKeyHash256GenHandler == null ) {
+			dbKeyHash256GenHandler = new CFBamSaxLoaderDbKeyHash256Gen( this );
+		}
+		return( dbKeyHash256GenHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash256Type getDbKeyHash256TypeHandler() {
+		if( dbKeyHash256TypeHandler == null ) {
+			dbKeyHash256TypeHandler = new CFBamSaxLoaderDbKeyHash256Type( this );
+		}
+		return( dbKeyHash256TypeHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash384Col getDbKeyHash384ColHandler() {
+		if( dbKeyHash384ColHandler == null ) {
+			dbKeyHash384ColHandler = new CFBamSaxLoaderDbKeyHash384Col( this );
+		}
+		return( dbKeyHash384ColHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash384Def getDbKeyHash384DefHandler() {
+		if( dbKeyHash384DefHandler == null ) {
+			dbKeyHash384DefHandler = new CFBamSaxLoaderDbKeyHash384Def( this );
+		}
+		return( dbKeyHash384DefHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash384Gen getDbKeyHash384GenHandler() {
+		if( dbKeyHash384GenHandler == null ) {
+			dbKeyHash384GenHandler = new CFBamSaxLoaderDbKeyHash384Gen( this );
+		}
+		return( dbKeyHash384GenHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash384Type getDbKeyHash384TypeHandler() {
+		if( dbKeyHash384TypeHandler == null ) {
+			dbKeyHash384TypeHandler = new CFBamSaxLoaderDbKeyHash384Type( this );
+		}
+		return( dbKeyHash384TypeHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash512Col getDbKeyHash512ColHandler() {
+		if( dbKeyHash512ColHandler == null ) {
+			dbKeyHash512ColHandler = new CFBamSaxLoaderDbKeyHash512Col( this );
+		}
+		return( dbKeyHash512ColHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash512Def getDbKeyHash512DefHandler() {
+		if( dbKeyHash512DefHandler == null ) {
+			dbKeyHash512DefHandler = new CFBamSaxLoaderDbKeyHash512Def( this );
+		}
+		return( dbKeyHash512DefHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash512Gen getDbKeyHash512GenHandler() {
+		if( dbKeyHash512GenHandler == null ) {
+			dbKeyHash512GenHandler = new CFBamSaxLoaderDbKeyHash512Gen( this );
+		}
+		return( dbKeyHash512GenHandler );
+	}
+	protected CFBamSaxLoaderDbKeyHash512Type getDbKeyHash512TypeHandler() {
+		if( dbKeyHash512TypeHandler == null ) {
+			dbKeyHash512TypeHandler = new CFBamSaxLoaderDbKeyHash512Type( this );
+		}
+		return( dbKeyHash512TypeHandler );
 	}
 	protected CFBamSaxLoaderDelDep getDelDepHandler() {
 		if( delDepHandler == null ) {
@@ -1354,6 +1440,18 @@ public class CFBamSaxLoader
 			schemaDefHandler.addElementHandler( "NmTokenType", getNmTokenTypeHandler() );
 			schemaDefHandler.addElementHandler( "NmTokensType", getNmTokensTypeHandler() );
 			schemaDefHandler.addElementHandler( "NumberType", getNumberTypeHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash128Type", getDbKeyHash128TypeHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash128Gen", getDbKeyHash128GenHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash160Type", getDbKeyHash160TypeHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash160Gen", getDbKeyHash160GenHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash224Type", getDbKeyHash224TypeHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash224Gen", getDbKeyHash224GenHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash256Type", getDbKeyHash256TypeHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash256Gen", getDbKeyHash256GenHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash384Type", getDbKeyHash384TypeHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash384Gen", getDbKeyHash384GenHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash512Type", getDbKeyHash512TypeHandler() );
+			schemaDefHandler.addElementHandler( "DbKeyHash512Gen", getDbKeyHash512GenHandler() );
 			schemaDefHandler.addElementHandler( "StringType", getStringTypeHandler() );
 			schemaDefHandler.addElementHandler( "TZDateType", getTZDateTypeHandler() );
 			schemaDefHandler.addElementHandler( "TZTimeType", getTZTimeTypeHandler() );
@@ -1367,6 +1465,8 @@ public class CFBamSaxLoader
 			schemaDefHandler.addElementHandler( "UInt64Type", getUInt64TypeHandler() );
 			schemaDefHandler.addElementHandler( "UuidType", getUuidTypeHandler() );
 			schemaDefHandler.addElementHandler( "UuidGen", getUuidGenHandler() );
+			schemaDefHandler.addElementHandler( "Uuid6Type", getUuid6TypeHandler() );
+			schemaDefHandler.addElementHandler( "Uuid6Gen", getUuid6GenHandler() );
 			schemaDefHandler.addElementHandler( "SchemaRef", getSchemaRefHandler() );
 			schemaDefHandler.addElementHandler( "CafeSchemaObjImport", getSchemaDefCafeSchemaObjImportHandler() );
 			schemaDefHandler.addElementHandler( "CafeSchemaObjInterface", getSchemaDefCafeSchemaObjInterfaceHandler() );
@@ -2612,6 +2712,12 @@ public class CFBamSaxLoader
 			tableHandler.addElementHandler( "NmTokenCol", getNmTokenColHandler() );
 			tableHandler.addElementHandler( "NmTokensCol", getNmTokensColHandler() );
 			tableHandler.addElementHandler( "NumberCol", getNumberColHandler() );
+			tableHandler.addElementHandler( "DbKeyHash128Col", getDbKeyHash128ColHandler() );
+			tableHandler.addElementHandler( "DbKeyHash160Col", getDbKeyHash160ColHandler() );
+			tableHandler.addElementHandler( "DbKeyHash224Col", getDbKeyHash224ColHandler() );
+			tableHandler.addElementHandler( "DbKeyHash256Col", getDbKeyHash256ColHandler() );
+			tableHandler.addElementHandler( "DbKeyHash384Col", getDbKeyHash384ColHandler() );
+			tableHandler.addElementHandler( "DbKeyHash512Col", getDbKeyHash512ColHandler() );
 			tableHandler.addElementHandler( "StringCol", getStringColHandler() );
 			tableHandler.addElementHandler( "TZDateCol", getTZDateColHandler() );
 			tableHandler.addElementHandler( "TZTimeCol", getTZTimeColHandler() );
@@ -2624,6 +2730,7 @@ public class CFBamSaxLoader
 			tableHandler.addElementHandler( "UInt32Col", getUInt32ColHandler() );
 			tableHandler.addElementHandler( "UInt64Col", getUInt64ColHandler() );
 			tableHandler.addElementHandler( "UuidCol", getUuidColHandler() );
+			tableHandler.addElementHandler( "Uuid6Col", getUuid6ColHandler() );
 			tableHandler.addElementHandler( "TableCol", getTableColHandler() );
 			tableHandler.addElementHandler( "Chain", getChainHandler() );
 			tableHandler.addElementHandler( "DelTopDep", getDelTopDepHandler() );
@@ -4056,6 +4163,30 @@ public class CFBamSaxLoader
 		}
 		return( uRLProtocolHandler );
 	}
+	protected CFBamSaxLoaderUuid6Col getUuid6ColHandler() {
+		if( uuid6ColHandler == null ) {
+			uuid6ColHandler = new CFBamSaxLoaderUuid6Col( this );
+		}
+		return( uuid6ColHandler );
+	}
+	protected CFBamSaxLoaderUuid6Def getUuid6DefHandler() {
+		if( uuid6DefHandler == null ) {
+			uuid6DefHandler = new CFBamSaxLoaderUuid6Def( this );
+		}
+		return( uuid6DefHandler );
+	}
+	protected CFBamSaxLoaderUuid6Gen getUuid6GenHandler() {
+		if( uuid6GenHandler == null ) {
+			uuid6GenHandler = new CFBamSaxLoaderUuid6Gen( this );
+		}
+		return( uuid6GenHandler );
+	}
+	protected CFBamSaxLoaderUuid6Type getUuid6TypeHandler() {
+		if( uuid6TypeHandler == null ) {
+			uuid6TypeHandler = new CFBamSaxLoaderUuid6Type( this );
+		}
+		return( uuid6TypeHandler );
+	}
 	protected CFBamSaxLoaderUuidCol getUuidColHandler() {
 		if( uuidColHandler == null ) {
 			uuidColHandler = new CFBamSaxLoaderUuidCol( this );
@@ -4312,6 +4443,198 @@ public class CFBamSaxLoader
 
 	public void setDateTypeLoaderBehaviour( LoaderBehaviourEnum value ) {
 		dateTypeLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash128ColLoaderBehaviour() {
+		return( dbKeyHash128ColLoaderBehaviour );
+	}
+
+	public void setDbKeyHash128ColLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash128ColLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash128DefLoaderBehaviour() {
+		return( dbKeyHash128DefLoaderBehaviour );
+	}
+
+	public void setDbKeyHash128DefLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash128DefLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash128GenLoaderBehaviour() {
+		return( dbKeyHash128GenLoaderBehaviour );
+	}
+
+	public void setDbKeyHash128GenLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash128GenLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash128TypeLoaderBehaviour() {
+		return( dbKeyHash128TypeLoaderBehaviour );
+	}
+
+	public void setDbKeyHash128TypeLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash128TypeLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash160ColLoaderBehaviour() {
+		return( dbKeyHash160ColLoaderBehaviour );
+	}
+
+	public void setDbKeyHash160ColLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash160ColLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash160DefLoaderBehaviour() {
+		return( dbKeyHash160DefLoaderBehaviour );
+	}
+
+	public void setDbKeyHash160DefLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash160DefLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash160GenLoaderBehaviour() {
+		return( dbKeyHash160GenLoaderBehaviour );
+	}
+
+	public void setDbKeyHash160GenLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash160GenLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash160TypeLoaderBehaviour() {
+		return( dbKeyHash160TypeLoaderBehaviour );
+	}
+
+	public void setDbKeyHash160TypeLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash160TypeLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash224ColLoaderBehaviour() {
+		return( dbKeyHash224ColLoaderBehaviour );
+	}
+
+	public void setDbKeyHash224ColLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash224ColLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash224DefLoaderBehaviour() {
+		return( dbKeyHash224DefLoaderBehaviour );
+	}
+
+	public void setDbKeyHash224DefLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash224DefLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash224GenLoaderBehaviour() {
+		return( dbKeyHash224GenLoaderBehaviour );
+	}
+
+	public void setDbKeyHash224GenLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash224GenLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash224TypeLoaderBehaviour() {
+		return( dbKeyHash224TypeLoaderBehaviour );
+	}
+
+	public void setDbKeyHash224TypeLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash224TypeLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash256ColLoaderBehaviour() {
+		return( dbKeyHash256ColLoaderBehaviour );
+	}
+
+	public void setDbKeyHash256ColLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash256ColLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash256DefLoaderBehaviour() {
+		return( dbKeyHash256DefLoaderBehaviour );
+	}
+
+	public void setDbKeyHash256DefLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash256DefLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash256GenLoaderBehaviour() {
+		return( dbKeyHash256GenLoaderBehaviour );
+	}
+
+	public void setDbKeyHash256GenLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash256GenLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash256TypeLoaderBehaviour() {
+		return( dbKeyHash256TypeLoaderBehaviour );
+	}
+
+	public void setDbKeyHash256TypeLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash256TypeLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash384ColLoaderBehaviour() {
+		return( dbKeyHash384ColLoaderBehaviour );
+	}
+
+	public void setDbKeyHash384ColLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash384ColLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash384DefLoaderBehaviour() {
+		return( dbKeyHash384DefLoaderBehaviour );
+	}
+
+	public void setDbKeyHash384DefLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash384DefLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash384GenLoaderBehaviour() {
+		return( dbKeyHash384GenLoaderBehaviour );
+	}
+
+	public void setDbKeyHash384GenLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash384GenLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash384TypeLoaderBehaviour() {
+		return( dbKeyHash384TypeLoaderBehaviour );
+	}
+
+	public void setDbKeyHash384TypeLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash384TypeLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash512ColLoaderBehaviour() {
+		return( dbKeyHash512ColLoaderBehaviour );
+	}
+
+	public void setDbKeyHash512ColLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash512ColLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash512DefLoaderBehaviour() {
+		return( dbKeyHash512DefLoaderBehaviour );
+	}
+
+	public void setDbKeyHash512DefLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash512DefLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash512GenLoaderBehaviour() {
+		return( dbKeyHash512GenLoaderBehaviour );
+	}
+
+	public void setDbKeyHash512GenLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash512GenLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getDbKeyHash512TypeLoaderBehaviour() {
+		return( dbKeyHash512TypeLoaderBehaviour );
+	}
+
+	public void setDbKeyHash512TypeLoaderBehaviour( LoaderBehaviourEnum value ) {
+		dbKeyHash512TypeLoaderBehaviour = value;
 	}
 
 	public LoaderBehaviourEnum getDelDepLoaderBehaviour() {
@@ -5264,6 +5587,38 @@ public class CFBamSaxLoader
 
 	public void setURLProtocolLoaderBehaviour( LoaderBehaviourEnum value ) {
 		uRLProtocolLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getUuid6ColLoaderBehaviour() {
+		return( uuid6ColLoaderBehaviour );
+	}
+
+	public void setUuid6ColLoaderBehaviour( LoaderBehaviourEnum value ) {
+		uuid6ColLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getUuid6DefLoaderBehaviour() {
+		return( uuid6DefLoaderBehaviour );
+	}
+
+	public void setUuid6DefLoaderBehaviour( LoaderBehaviourEnum value ) {
+		uuid6DefLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getUuid6GenLoaderBehaviour() {
+		return( uuid6GenLoaderBehaviour );
+	}
+
+	public void setUuid6GenLoaderBehaviour( LoaderBehaviourEnum value ) {
+		uuid6GenLoaderBehaviour = value;
+	}
+
+	public LoaderBehaviourEnum getUuid6TypeLoaderBehaviour() {
+		return( uuid6TypeLoaderBehaviour );
+	}
+
+	public void setUuid6TypeLoaderBehaviour( LoaderBehaviourEnum value ) {
+		uuid6TypeLoaderBehaviour = value;
 	}
 
 	public LoaderBehaviourEnum getUuidColLoaderBehaviour() {
