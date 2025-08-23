@@ -299,7 +299,6 @@ public class CFBamSaxLoader
 	public CFBamSaxLoader( ICFLibMessageLog logger ) {
 		super( logger );
 		setRootElementHandler( getSaxRootHandler() );
-		}
 		initParser();
 	}
 
