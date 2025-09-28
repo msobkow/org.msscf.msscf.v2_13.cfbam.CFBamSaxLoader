@@ -825,7 +825,7 @@
 
 <xsd:simpleType name="DbKeyHash128DefInitValueType">
 	<xsd:restriction base="xsd:string">
-		<xsd:maxLength value="256"/>
+		<xsd:maxLength value="32"/>
 		<xsd:whiteSpace value="preserve"/>
 	</xsd:restriction>
 </xsd:simpleType>
@@ -902,7 +902,7 @@
 
 <xsd:simpleType name="DbKeyHash160DefInitValueType">
 	<xsd:restriction base="xsd:string">
-		<xsd:maxLength value="320"/>
+		<xsd:maxLength value="40"/>
 		<xsd:whiteSpace value="preserve"/>
 	</xsd:restriction>
 </xsd:simpleType>
@@ -979,7 +979,7 @@
 
 <xsd:simpleType name="DbKeyHash224DefInitValueType">
 	<xsd:restriction base="xsd:string">
-		<xsd:maxLength value="448"/>
+		<xsd:maxLength value="56"/>
 		<xsd:whiteSpace value="preserve"/>
 	</xsd:restriction>
 </xsd:simpleType>
@@ -1056,7 +1056,7 @@
 
 <xsd:simpleType name="DbKeyHash256DefInitValueType">
 	<xsd:restriction base="xsd:string">
-		<xsd:maxLength value="512"/>
+		<xsd:maxLength value="64"/>
 		<xsd:whiteSpace value="preserve"/>
 	</xsd:restriction>
 </xsd:simpleType>
@@ -1133,7 +1133,7 @@
 
 <xsd:simpleType name="DbKeyHash384DefInitValueType">
 	<xsd:restriction base="xsd:string">
-		<xsd:maxLength value="768"/>
+		<xsd:maxLength value="96"/>
 		<xsd:whiteSpace value="preserve"/>
 	</xsd:restriction>
 </xsd:simpleType>
@@ -1210,7 +1210,7 @@
 
 <xsd:simpleType name="DbKeyHash512DefInitValueType">
 	<xsd:restriction base="xsd:string">
-		<xsd:maxLength value="1024"/>
+		<xsd:maxLength value="128"/>
 		<xsd:whiteSpace value="preserve"/>
 	</xsd:restriction>
 </xsd:simpleType>
@@ -7287,7 +7287,10 @@
 </xsd:simpleType>
 
 <xsd:simpleType name="Uuid6DefInitValueType">
-	<xsd:restriction base="xsd:string"/>
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="62"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
 </xsd:simpleType>
 
 <xsd:simpleType name="Uuid6DefRevisionType">

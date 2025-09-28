@@ -409,13 +409,7 @@ public class CFBamSaxLoaderUuid6Gen
 			String natDbName = attrDbName;
 			editBuff.setOptionalDbName( natDbName );
 
-			UUID natInitValue;
-			if( ( attrInitValue == null ) || ( attrInitValue.length() <= 0 ) ) {
-				natInitValue = null;
-			}
-			else {
-				natInitValue = UUID.fromString( attrInitValue );
-			}
+			String natInitValue = attrInitValue;
 			editBuff.setOptionalInitValue( natInitValue );
 
 			short natSlice = Short.parseShort( attrSlice );
