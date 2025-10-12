@@ -844,6 +844,20 @@
 	</xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="DbKeyHash128GenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash128GenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash128GenSliceType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
 <xsd:simpleType name="DbKeyHash128GenBlockSizeType">
 	<xsd:restriction base="xsd:integer"/>
 </xsd:simpleType>
@@ -919,6 +933,20 @@
 <xsd:simpleType name="DbKeyHash160GenIdType">
 	<xsd:restriction base="ValueIdGenType">
 	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash160GenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash160GenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash160GenSliceType">
+	<xsd:restriction base="xsd:short"/>
 </xsd:simpleType>
 
 <xsd:simpleType name="DbKeyHash160GenBlockSizeType">
@@ -998,6 +1026,20 @@
 	</xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="DbKeyHash224GenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash224GenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash224GenSliceType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
 <xsd:simpleType name="DbKeyHash224GenBlockSizeType">
 	<xsd:restriction base="xsd:integer"/>
 </xsd:simpleType>
@@ -1073,6 +1115,20 @@
 <xsd:simpleType name="DbKeyHash256GenIdType">
 	<xsd:restriction base="ValueIdGenType">
 	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash256GenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash256GenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash256GenSliceType">
+	<xsd:restriction base="xsd:short"/>
 </xsd:simpleType>
 
 <xsd:simpleType name="DbKeyHash256GenBlockSizeType">
@@ -1152,6 +1208,20 @@
 	</xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="DbKeyHash384GenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash384GenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash384GenSliceType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
 <xsd:simpleType name="DbKeyHash384GenBlockSizeType">
 	<xsd:restriction base="xsd:integer"/>
 </xsd:simpleType>
@@ -1227,6 +1297,20 @@
 <xsd:simpleType name="DbKeyHash512GenIdType">
 	<xsd:restriction base="ValueIdGenType">
 	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash512GenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash512GenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="DbKeyHash512GenSliceType">
+	<xsd:restriction base="xsd:short"/>
 </xsd:simpleType>
 
 <xsd:simpleType name="DbKeyHash512GenBlockSizeType">
@@ -10427,7 +10511,9 @@
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				</xsd:choice>
 			</xsd:sequence>
+			<xsd:attribute name="Slice" type="DbKeyHash128GenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="DbKeyHash128GenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>
@@ -10473,7 +10559,9 @@
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				</xsd:choice>
 			</xsd:sequence>
+			<xsd:attribute name="Slice" type="DbKeyHash160GenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="DbKeyHash160GenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>
@@ -10519,7 +10607,9 @@
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				</xsd:choice>
 			</xsd:sequence>
+			<xsd:attribute name="Slice" type="DbKeyHash224GenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="DbKeyHash224GenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>
@@ -10565,7 +10655,9 @@
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				</xsd:choice>
 			</xsd:sequence>
+			<xsd:attribute name="Slice" type="DbKeyHash256GenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="DbKeyHash256GenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>
@@ -10611,7 +10703,9 @@
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				</xsd:choice>
 			</xsd:sequence>
+			<xsd:attribute name="Slice" type="DbKeyHash384GenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="DbKeyHash384GenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>
@@ -10657,7 +10751,9 @@
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				</xsd:choice>
 			</xsd:sequence>
+			<xsd:attribute name="Slice" type="DbKeyHash512GenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="DbKeyHash512GenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>

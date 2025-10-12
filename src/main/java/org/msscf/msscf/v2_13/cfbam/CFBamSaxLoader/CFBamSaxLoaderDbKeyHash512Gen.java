@@ -102,8 +102,11 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 		// DbKeyHash512Type References
 		ICFBamSchemaDefObj refSchemaDef = null;
 		// DbKeyHash512Gen Attributes
+		String attrSlice = null;
 		String attrBlockSize = null;
+		String attrDispenser = null;
 		// DbKeyHash512Gen References
+		ICFBamTableObj refDispenser = null;
 		// Attribute Extraction
 		String attrLocalName;
 		int numAttrs;
@@ -253,6 +256,15 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 					}
 					attrInitValue = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "Slice" ) ) {
+					if( attrSlice != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrSlice = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "BlockSize" ) ) {
 					if( attrBlockSize != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
@@ -261,6 +273,15 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 							attrLocalName );
 					}
 					attrBlockSize = attrs.getValue( idxAttr );
+				}
+				else if( attrLocalName.equals( "Dispenser" ) ) {
+					if( attrDispenser != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrDispenser = attrs.getValue( idxAttr );
 				}
 				else if( attrLocalName.equals( "schemaLocation" ) ) {
 					// ignored
@@ -292,6 +313,12 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 					0,
 					"ImplementsPolymorph" );
 			}
+			if( ( attrSlice == null ) || ( attrSlice.length() <= 0 ) ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"Slice" );
+			}
 			if( ( attrBlockSize == null ) || ( attrBlockSize.length() <= 0 ) ) {
 				throw new CFLibNullArgumentException( getClass(),
 					S_ProcName,
@@ -314,7 +341,9 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 			curContext.putNamedValue( "DefSchema", attrDefSchema );
 			curContext.putNamedValue( "DbName", attrDbName );
 			curContext.putNamedValue( "InitValue", attrInitValue );
+			curContext.putNamedValue( "Slice", attrSlice );
 			curContext.putNamedValue( "BlockSize", attrBlockSize );
+			curContext.putNamedValue( "Dispenser", attrDispenser );
 
 			// Convert string attributes to native Java types
 			// and apply the converted attributes to the editBuff.
@@ -395,6 +424,9 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 			String natInitValue = attrInitValue;
 			editBuff.setOptionalInitValue( natInitValue );
 
+			short natSlice = Short.parseShort( attrSlice );
+			editBuff.setRequiredSlice( natSlice );
+
 			int natBlockSize = Integer.parseInt( attrBlockSize );
 			editBuff.setRequiredBlockSize( natBlockSize );
 
@@ -462,6 +494,22 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 			}
 			editBuff.setOptionalLookupDefSchema( refDefSchema );
 
+			// Lookup refDispenser by qualified name
+			if( ( attrDispenser != null ) && ( attrDispenser.length() > 0 ) ) {
+				refDispenser = (ICFBamTableObj)(editBuff.getNamedObject( schemaObj.getTableTableObj().getObjQualifyingClass(),
+					attrDispenser ) );
+				if( refDispenser == null ) {
+					throw new CFLibNullArgumentException( getClass(),
+						S_ProcName,
+						0,
+						"Resolve Dispenser reference qualified name \"" + attrDispenser + "\" to table Table" );
+				}
+			}
+			else {
+				refDispenser = null;
+			}
+			editBuff.setOptionalLookupDispenser( refDispenser );
+
 			CFBamSaxLoader.LoaderBehaviourEnum loaderBehaviour = saxLoader.getDbKeyHash512GenLoaderBehaviour();
 			ICFBamDbKeyHash512GenEditObj editDbKeyHash512Gen = null;
 			ICFBamDbKeyHash512GenObj origDbKeyHash512Gen = (ICFBamDbKeyHash512GenObj)schemaObj.getDbKeyHash512GenTableObj().readDbKeyHash512GenByUNameIdx( refTenant.getRequiredId(),
@@ -487,8 +535,10 @@ public class CFBamSaxLoaderDbKeyHash512Gen
 						editDbKeyHash512Gen.setRequiredImplementsPolymorph( editBuff.getRequiredImplementsPolymorph() );
 						editDbKeyHash512Gen.setOptionalDbName( editBuff.getOptionalDbName() );
 						editDbKeyHash512Gen.setOptionalInitValue( editBuff.getOptionalInitValue() );
+						editDbKeyHash512Gen.setRequiredSlice( editBuff.getRequiredSlice() );
 						editDbKeyHash512Gen.setRequiredBlockSize( editBuff.getRequiredBlockSize() );
 						editDbKeyHash512Gen.setOptionalLookupDefSchema( editBuff.getOptionalLookupDefSchema() );
+						editDbKeyHash512Gen.setOptionalLookupDispenser( editBuff.getOptionalLookupDispenser() );
 						break;
 					case Replace:
 						editDbKeyHash512Gen = (ICFBamDbKeyHash512GenEditObj)origDbKeyHash512Gen.beginEdit();
