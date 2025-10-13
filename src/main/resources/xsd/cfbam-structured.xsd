@@ -7391,6 +7391,16 @@
 	</xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="Uuid6GenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="Uuid6GenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="Uuid6GenSliceType">
 	<xsd:restriction base="xsd:short"/>
 </xsd:simpleType>
@@ -7466,6 +7476,16 @@
 
 <xsd:simpleType name="UuidGenIdType">
 	<xsd:restriction base="ValueIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="UuidGenDispenserTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="UuidGenDispenserIdType">
+	<xsd:restriction base="ScopeIdGenType">
 	</xsd:restriction>
 </xsd:simpleType>
 
@@ -11175,6 +11195,7 @@
 			</xsd:sequence>
 			<xsd:attribute name="Slice" type="UuidGenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="UuidGenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>
@@ -11222,6 +11243,7 @@
 			</xsd:sequence>
 			<xsd:attribute name="Slice" type="Uuid6GenSliceType" use="required"/>
 			<xsd:attribute name="BlockSize" type="Uuid6GenBlockSizeType" use="required"/>
+			<xsd:attribute name="Dispenser" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>

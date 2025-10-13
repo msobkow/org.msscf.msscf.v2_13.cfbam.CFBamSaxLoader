@@ -104,7 +104,9 @@ public class CFBamSaxLoaderUuidGen
 		// UuidGen Attributes
 		String attrSlice = null;
 		String attrBlockSize = null;
+		String attrDispenser = null;
 		// UuidGen References
+		ICFBamTableObj refDispenser = null;
 		// Attribute Extraction
 		String attrLocalName;
 		int numAttrs;
@@ -272,6 +274,15 @@ public class CFBamSaxLoaderUuidGen
 					}
 					attrBlockSize = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "Dispenser" ) ) {
+					if( attrDispenser != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrDispenser = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "schemaLocation" ) ) {
 					// ignored
 				}
@@ -332,6 +343,7 @@ public class CFBamSaxLoaderUuidGen
 			curContext.putNamedValue( "InitValue", attrInitValue );
 			curContext.putNamedValue( "Slice", attrSlice );
 			curContext.putNamedValue( "BlockSize", attrBlockSize );
+			curContext.putNamedValue( "Dispenser", attrDispenser );
 
 			// Convert string attributes to native Java types
 			// and apply the converted attributes to the editBuff.
@@ -488,6 +500,22 @@ public class CFBamSaxLoaderUuidGen
 			}
 			editBuff.setOptionalLookupDefSchema( refDefSchema );
 
+			// Lookup refDispenser by qualified name
+			if( ( attrDispenser != null ) && ( attrDispenser.length() > 0 ) ) {
+				refDispenser = (ICFBamTableObj)(editBuff.getNamedObject( schemaObj.getTableTableObj().getObjQualifyingClass(),
+					attrDispenser ) );
+				if( refDispenser == null ) {
+					throw new CFLibNullArgumentException( getClass(),
+						S_ProcName,
+						0,
+						"Resolve Dispenser reference qualified name \"" + attrDispenser + "\" to table Table" );
+				}
+			}
+			else {
+				refDispenser = null;
+			}
+			editBuff.setOptionalLookupDispenser( refDispenser );
+
 			CFBamSaxLoader.LoaderBehaviourEnum loaderBehaviour = saxLoader.getUuidGenLoaderBehaviour();
 			ICFBamUuidGenEditObj editUuidGen = null;
 			ICFBamUuidGenObj origUuidGen = (ICFBamUuidGenObj)schemaObj.getUuidGenTableObj().readUuidGenByUNameIdx( refTenant.getRequiredId(),
@@ -516,6 +544,7 @@ public class CFBamSaxLoaderUuidGen
 						editUuidGen.setRequiredSlice( editBuff.getRequiredSlice() );
 						editUuidGen.setRequiredBlockSize( editBuff.getRequiredBlockSize() );
 						editUuidGen.setOptionalLookupDefSchema( editBuff.getOptionalLookupDefSchema() );
+						editUuidGen.setOptionalLookupDispenser( editBuff.getOptionalLookupDispenser() );
 						break;
 					case Replace:
 						editUuidGen = (ICFBamUuidGenEditObj)origUuidGen.beginEdit();
