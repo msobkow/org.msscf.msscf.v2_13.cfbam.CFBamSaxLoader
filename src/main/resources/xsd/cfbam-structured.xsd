@@ -274,8 +274,8 @@
 		<xsd:maxLength value="127"/>
 		<xsd:whiteSpace value="collapse"/>
 		<xsd:enumeration value="None"/>
-		<xsd:enumeration value="Global"/>
 		<xsd:enumeration value="System"/>
+		<xsd:enumeration value="Global"/>
 		<xsd:enumeration value="Cluster"/>
 		<xsd:enumeration value="Tenant"/>
 		<xsd:enumeration value="SystemGroup"/>
