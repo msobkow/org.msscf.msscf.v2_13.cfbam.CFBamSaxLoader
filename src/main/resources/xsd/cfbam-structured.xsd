@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="uri://org.msscf/msscf/2.0.13/cfbamloader" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="uri://org.msscf/msscf/2.0.13/cfbamloader" version="2.13">
+<xsd:schema xmlns="http://mcf.markhome.server/msscf/2.0.13/xsd/cfbam-structured.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://mcf.markhome.server/msscf/2.0.13/xsd/cfbam-structured.xsd" version="2.13">
 
 <xsd:annotation>
 	<xsd:documentation xml:lang="en">
@@ -285,6 +285,10 @@
 </xsd:simpleType>
 
 <xsd:simpleType name="ValueIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakIdGenType">
 	<xsd:restriction base="xsd:long"/>
 </xsd:simpleType>
 
@@ -4462,6 +4466,25 @@
 	<xsd:restriction base="xsd:integer"/>
 </xsd:simpleType>
 
+<xsd:simpleType name="SchemaTweakTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SchemaTweakIdType">
+	<xsd:restriction base="TweakIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SchemaTweakSchemaDefIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SchemaTweakRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
 <xsd:simpleType name="ScopeTenantIdType">
 	<xsd:restriction base="TenantIdGenType">
 	</xsd:restriction>
@@ -6763,6 +6786,25 @@
 	<xsd:restriction base="xsd:integer"/>
 </xsd:simpleType>
 
+<xsd:simpleType name="TableTweakTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TableTweakIdType">
+	<xsd:restriction base="TweakIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TableTweakTableIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TableTweakRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
 <xsd:simpleType name="TenantClusterIdType">
 	<xsd:restriction base="ClusterIdGenType">
 	</xsd:restriction>
@@ -7123,6 +7165,49 @@
 </xsd:simpleType>
 
 <xsd:simpleType name="TopProjectRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakScopeIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakIdType">
+	<xsd:restriction base="TweakIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakDefSchemaTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakDefSchemaIdType">
+	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakNameType">
+	<xsd:restriction base="NameTypeType">
+		<xsd:maxLength value="192"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakTweakGelTextType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="2000000"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TweakRevisionType">
 	<xsd:restriction base="xsd:integer"/>
 </xsd:simpleType>
 
@@ -8320,6 +8405,13 @@
 	<xsd:attribute name="Id" type="SchemaRefIdType" use="required"/>
 </xsd:complexType>
 
+<xsd:complexType name="SchemaTweakIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="TenantId" type="SchemaTweakTenantIdType" use="required"/>
+	<xsd:attribute name="Id" type="SchemaTweakIdType" use="required"/>
+</xsd:complexType>
+
 <xsd:complexType name="ScopeIdIdxType" mixed="true">
 	<xsd:sequence>
 	</xsd:sequence>
@@ -8561,6 +8653,13 @@
 	<xsd:attribute name="Id" type="TableColIdType" use="required"/>
 </xsd:complexType>
 
+<xsd:complexType name="TableTweakIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="TenantId" type="TableTweakTenantIdType" use="required"/>
+	<xsd:attribute name="Id" type="TableTweakIdType" use="required"/>
+</xsd:complexType>
+
 <xsd:complexType name="TenantIdIdxType" mixed="true">
 	<xsd:sequence>
 	</xsd:sequence>
@@ -8670,6 +8769,13 @@
 	</xsd:sequence>
 	<xsd:attribute name="TenantId" type="TopProjectTenantIdType" use="required"/>
 	<xsd:attribute name="Id" type="TopProjectIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TweakIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="TenantId" type="TweakTenantIdType" use="required"/>
+	<xsd:attribute name="Id" type="TweakIdType" use="required"/>
 </xsd:complexType>
 
 <xsd:complexType name="UInt16ColIdIdxType" mixed="true">
@@ -9060,6 +9166,7 @@
 					<xsd:element name="Uuid6Type" type="Uuid6TypeObjType" />
 					<xsd:element name="Uuid6Gen" type="Uuid6GenObjType" />
 					<xsd:element name="SchemaRef" type="SchemaRefObjType" />
+					<xsd:element name="SchemaTweak" type="SchemaTweakObjType" />
 					<xsd:element name="CafeSchemaObjImport" type="SchemaDefJSchemaObjImportType" />
 					<xsd:element name="CafeSchemaObjInterface" type="SchemaDefJSchemaObjInterfaceType" />
 					<xsd:element name="CafeSchemaObjMembers" type="SchemaDefJSchemaObjMembersType" />
@@ -9356,6 +9463,7 @@
 					<xsd:element name="ServerObjFunc" type="ServerObjFuncObjType" />
 					<xsd:element name="ServerProc" type="ServerProcObjType" />
 					<xsd:element name="ServerListFunc" type="ServerListFuncObjType" />
+					<xsd:element name="TableTweak" type="TableTweakObjType" />
 					<xsd:element name="CafeObjMembers" type="TableJObjMembersType" />
 					<xsd:element name="CafeObjInterface" type="TableJObjInterfaceType" />
 					<xsd:element name="CafeObjImport" type="TableJObjImportType" />
@@ -9994,6 +10102,38 @@
 	</xsd:sequence>
 	<xsd:attribute name="Name" type="TopProjectNameType" use="required"/>
 	<xsd:attribute name="Description" type="TopProjectDescriptionType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TweakObjType" mixed="true">
+	<xsd:sequence>
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+		</xsd:choice>
+	</xsd:sequence>
+	<xsd:attribute name="Name" type="TweakNameType" use="required"/>
+	<xsd:attribute name="TweakGelText" type="TweakTweakGelTextType" use="required"/>
+	<xsd:attribute name="DefSchema" type="xsd:string" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TableTweakObjType" mixed="true">
+	<xsd:complexContent>
+		<xsd:extension base="TweakObjType">
+			<xsd:sequence>
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:extension>
+	</xsd:complexContent>
+</xsd:complexType>
+
+<xsd:complexType name="SchemaTweakObjType" mixed="true">
+	<xsd:complexContent>
+		<xsd:extension base="TweakObjType">
+			<xsd:sequence>
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:extension>
+	</xsd:complexContent>
 </xsd:complexType>
 
 <xsd:complexType name="URLProtocolObjType" mixed="true">
