@@ -7200,6 +7200,10 @@
 	</xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="TweakReplacesInheritedType">
+	<xsd:restriction base="xsd:boolean"/>
+</xsd:simpleType>
+
 <xsd:simpleType name="TweakTweakGelTextType">
 	<xsd:restriction base="xsd:string">
 		<xsd:maxLength value="2000000"/>
@@ -10110,6 +10114,7 @@
 		</xsd:choice>
 	</xsd:sequence>
 	<xsd:attribute name="Name" type="TweakNameType" use="required"/>
+	<xsd:attribute name="ReplacesInherited" type="TweakReplacesInheritedType" use="required"/>
 	<xsd:attribute name="TweakGelText" type="TweakTweakGelTextType" use="required"/>
 	<xsd:attribute name="DefSchema" type="xsd:string" use="optional"/>
 </xsd:complexType>
