@@ -284,6 +284,17 @@
 	</xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="RoleScopeEnumType">
+	<xsd:restriction base="xsd:token">
+		<xsd:minLength value="1"/>
+		<xsd:maxLength value="127"/>
+		<xsd:whiteSpace value="collapse"/>
+		<xsd:enumeration value="SysRole"/>
+		<xsd:enumeration value="ClusRole"/>
+		<xsd:enumeration value="TentRole"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="ValueIdGenType">
 	<xsd:restriction base="xsd:long"/>
 </xsd:simpleType>
@@ -4544,6 +4555,11 @@
 
 <xsd:simpleType name="SchemaRoleSchemaDefIdType">
 	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SchemaRoleRoleScopeType">
+	<xsd:restriction base="RoleScopeEnumType">
 	</xsd:restriction>
 </xsd:simpleType>
 
@@ -9237,6 +9253,7 @@
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				</xsd:choice>
 			</xsd:sequence>
+			<xsd:attribute name="RoleScope" type="SchemaRoleRoleScopeType" use="required"/>
 		</xsd:extension>
 	</xsd:complexContent>
 </xsd:complexType>
