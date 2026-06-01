@@ -88,7 +88,8 @@ public class CFBamSaxLoaderRoleDef
 		String attrId = null;
 		// RoleDef Attributes
 		String attrName = null;
-		String attrMembershipString = null;
+		String attrEnables = null;
+		String attrIncludes = null;
 		String attrDefSchema = null;
 		// RoleDef References
 		ICFBamTenantObj refTenant = null;
@@ -144,14 +145,23 @@ public class CFBamSaxLoaderRoleDef
 					}
 					attrName = attrs.getValue( idxAttr );
 				}
-				else if( attrLocalName.equals( "MembershipString" ) ) {
-					if( attrMembershipString != null ) {
+				else if( attrLocalName.equals( "Enables" ) ) {
+					if( attrEnables != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
 							S_ProcName,
 							S_LocalName,
 							attrLocalName );
 					}
-					attrMembershipString = attrs.getValue( idxAttr );
+					attrEnables = attrs.getValue( idxAttr );
+				}
+				else if( attrLocalName.equals( "Includes" ) ) {
+					if( attrIncludes != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrIncludes = attrs.getValue( idxAttr );
 				}
 				else if( attrLocalName.equals( "DefSchema" ) ) {
 					if( attrDefSchema != null ) {
@@ -180,18 +190,25 @@ public class CFBamSaxLoaderRoleDef
 					0,
 					"Name" );
 			}
-			if( attrMembershipString == null ) {
+			if( attrEnables == null ) {
 				throw new CFLibNullArgumentException( getClass(),
 					S_ProcName,
 					0,
-					"MembershipString" );
+					"Enables" );
+			}
+			if( attrIncludes == null ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"Includes" );
 			}
 
 			// Save named attributes to context
 			CFLibXmlCoreContext curContext = getParser().getCurContext();
 			curContext.putNamedValue( "Id", attrId );
 			curContext.putNamedValue( "Name", attrName );
-			curContext.putNamedValue( "MembershipString", attrMembershipString );
+			curContext.putNamedValue( "Enables", attrEnables );
+			curContext.putNamedValue( "Includes", attrIncludes );
 			curContext.putNamedValue( "DefSchema", attrDefSchema );
 
 			// Convert string attributes to native Java types
@@ -207,8 +224,11 @@ public class CFBamSaxLoaderRoleDef
 			String natName = attrName;
 			editBuff.setRequiredName( natName );
 
-			String natMembershipString = attrMembershipString;
-			editBuff.setRequiredMembershipString( natMembershipString );
+			String natEnables = attrEnables;
+			editBuff.setRequiredEnables( natEnables );
+
+			String natIncludes = attrIncludes;
+			editBuff.setRequiredIncludes( natIncludes );
 
 			// Get the scope/container object
 
@@ -288,7 +308,8 @@ public class CFBamSaxLoaderRoleDef
 					case Update:
 						editRoleDef = (ICFBamRoleDefEditObj)origRoleDef.beginEdit();
 						editRoleDef.setRequiredName( editBuff.getRequiredName() );
-						editRoleDef.setRequiredMembershipString( editBuff.getRequiredMembershipString() );
+						editRoleDef.setRequiredEnables( editBuff.getRequiredEnables() );
+						editRoleDef.setRequiredIncludes( editBuff.getRequiredIncludes() );
 						editRoleDef.setOptionalLookupDefSchema( editBuff.getOptionalLookupDefSchema() );
 						break;
 					case Replace:
