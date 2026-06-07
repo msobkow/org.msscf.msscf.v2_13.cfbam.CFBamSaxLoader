@@ -264,6 +264,17 @@
 	</xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="CodeVisibilityEnumType">
+	<xsd:restriction base="xsd:token">
+		<xsd:minLength value="1"/>
+		<xsd:maxLength value="127"/>
+		<xsd:whiteSpace value="collapse"/>
+		<xsd:enumeration value="Public"/>
+		<xsd:enumeration value="Protected"/>
+		<xsd:enumeration value="Private"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="ScopeIdGenType">
 	<xsd:restriction base="xsd:long"/>
 </xsd:simpleType>
@@ -2125,6 +2136,11 @@
 	<xsd:restriction base="xsd:boolean"/>
 </xsd:simpleType>
 
+<xsd:simpleType name="IndexCodeVisType">
+	<xsd:restriction base="CodeVisibilityEnumType">
+	</xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="IndexRevisionType">
 	<xsd:restriction base="xsd:integer"/>
 </xsd:simpleType>
@@ -3120,6 +3136,11 @@
 
 <xsd:simpleType name="RelationNarrowedIdType">
 	<xsd:restriction base="ScopeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="RelationCodeVisType">
+	<xsd:restriction base="CodeVisibilityEnumType">
 	</xsd:restriction>
 </xsd:simpleType>
 
@@ -4962,6 +4983,11 @@
 	<xsd:restriction base="xsd:boolean"/>
 </xsd:simpleType>
 
+<xsd:simpleType name="ServerMethodCodeVisType">
+	<xsd:restriction base="CodeVisibilityEnumType">
+	</xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="ServerMethodJMethodBodyType">
 	<xsd:restriction base="xsd:string">
 		<xsd:maxLength value="2000000"/>
@@ -5584,6 +5610,11 @@
 
 <xsd:simpleType name="TableSecScopeType">
 	<xsd:restriction base="SecScopeEnumType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TableCodeVisType">
+	<xsd:restriction base="CodeVisibilityEnumType">
 	</xsd:restriction>
 </xsd:simpleType>
 
@@ -9531,6 +9562,7 @@
 			<xsd:attribute name="Suffix" type="ServerMethodSuffixType" use="optional"/>
 			<xsd:attribute name="IsInstanceMethod" type="ServerMethodIsInstanceMethodType" use="required"/>
 			<xsd:attribute name="IsServerOnly" type="ServerMethodIsServerOnlyType" use="required"/>
+			<xsd:attribute name="CodeVis" type="ServerMethodCodeVisType" use="required"/>
 			<xsd:attribute name="JMethodBody" type="ServerMethodJMethodBodyType" use="required"/>
 			<xsd:attribute name="CppMethodBody" type="ServerMethodCppMethodBodyType" use="required"/>
 			<xsd:attribute name="CsMethodBody" type="ServerMethodCsMethodBodyType" use="required"/>
@@ -9817,6 +9849,7 @@
 			<xsd:attribute name="IsServerOnly" type="TableIsServerOnlyType" use="required"/>
 			<xsd:attribute name="LoaderBehaviour" type="TableLoaderBehaviourType" use="required"/>
 			<xsd:attribute name="SecScope" type="TableSecScopeType" use="required"/>
+			<xsd:attribute name="CodeVis" type="TableCodeVisType" use="required"/>
 			<xsd:attribute name="CppPgSqlTableInclude" type="TableCppPgSqlTableIncludeType" use="optional"/>
 			<xsd:attribute name="DefSchema" type="xsd:string" use="optional"/>
 			<xsd:attribute name="LookupIndex" type="xsd:string" use="optional"/>
@@ -9973,6 +10006,7 @@
 			<xsd:attribute name="Suffix" type="IndexSuffixType" use="optional"/>
 			<xsd:attribute name="IsUnique" type="IndexIsUniqueType" use="required"/>
 			<xsd:attribute name="IsDbMapped" type="IndexIsDbMappedType" use="required"/>
+			<xsd:attribute name="CodeVis" type="IndexCodeVisType" use="required"/>
 			<xsd:attribute name="DefSchema" type="xsd:string" use="optional"/>
 		</xsd:extension>
 	</xsd:complexContent>
@@ -10063,6 +10097,7 @@
 			<xsd:attribute name="IsXsdContainer" type="RelationIsXsdContainerType" use="required"/>
 			<xsd:attribute name="IsLateResolver" type="RelationIsLateResolverType" use="required"/>
 			<xsd:attribute name="AllowAddendum" type="RelationAllowAddendumType" use="required"/>
+			<xsd:attribute name="CodeVis" type="RelationCodeVisType" use="required"/>
 			<xsd:attribute name="DefSchema" type="xsd:string" use="optional"/>
 			<xsd:attribute name="FromIndex" type="xsd:string" use="required"/>
 			<xsd:attribute name="ToTable" type="xsd:string" use="required"/>

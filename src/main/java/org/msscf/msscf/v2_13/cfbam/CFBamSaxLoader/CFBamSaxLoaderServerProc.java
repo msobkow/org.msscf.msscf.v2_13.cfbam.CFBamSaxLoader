@@ -98,6 +98,7 @@ public class CFBamSaxLoaderServerProc
 		String attrSuffix = null;
 		String attrIsInstanceMethod = null;
 		String attrIsServerOnly = null;
+		String attrCodeVis = null;
 		String attrJMethodBody = null;
 		String attrCppMethodBody = null;
 		String attrCsMethodBody = null;
@@ -221,6 +222,15 @@ public class CFBamSaxLoaderServerProc
 					}
 					attrIsServerOnly = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "CodeVis" ) ) {
+					if( attrCodeVis != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrCodeVis = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "JMethodBody" ) ) {
 					if( attrJMethodBody != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
@@ -296,6 +306,12 @@ public class CFBamSaxLoaderServerProc
 					0,
 					"IsServerOnly" );
 			}
+			if( ( attrCodeVis == null ) || ( attrCodeVis.length() <= 0 ) ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"CodeVis" );
+			}
 			if( attrJMethodBody == null ) {
 				throw new CFLibNullArgumentException( getClass(),
 					S_ProcName,
@@ -326,6 +342,7 @@ public class CFBamSaxLoaderServerProc
 			curContext.putNamedValue( "Suffix", attrSuffix );
 			curContext.putNamedValue( "IsInstanceMethod", attrIsInstanceMethod );
 			curContext.putNamedValue( "IsServerOnly", attrIsServerOnly );
+			curContext.putNamedValue( "CodeVis", attrCodeVis );
 			curContext.putNamedValue( "JMethodBody", attrJMethodBody );
 			curContext.putNamedValue( "CppMethodBody", attrCppMethodBody );
 			curContext.putNamedValue( "CsMethodBody", attrCsMethodBody );
@@ -387,6 +404,9 @@ public class CFBamSaxLoaderServerProc
 					"Unexpected IsServerOnly value, must be one of true, false, yes, no, 1, or 0, not \"" + attrIsServerOnly + "\"" );
 			}
 			editBuff.setRequiredIsServerOnly( natIsServerOnly );
+
+			ICFBamSchema.CodeVisibilityEnum natCodeVis = CFBamSchema.parseCodeVisibilityEnum( attrCodeVis );
+			editBuff.setRequiredCodeVis( natCodeVis );
 
 			String natJMethodBody = attrJMethodBody;
 			editBuff.setRequiredJMethodBody( natJMethodBody );
@@ -485,6 +505,7 @@ public class CFBamSaxLoaderServerProc
 						editServerProc.setOptionalSuffix( editBuff.getOptionalSuffix() );
 						editServerProc.setRequiredIsInstanceMethod( editBuff.getRequiredIsInstanceMethod() );
 						editServerProc.setRequiredIsServerOnly( editBuff.getRequiredIsServerOnly() );
+						editServerProc.setRequiredCodeVis( editBuff.getRequiredCodeVis() );
 						editServerProc.setRequiredJMethodBody( editBuff.getRequiredJMethodBody() );
 						editServerProc.setRequiredCppMethodBody( editBuff.getRequiredCppMethodBody() );
 						editServerProc.setRequiredCsMethodBody( editBuff.getRequiredCsMethodBody() );

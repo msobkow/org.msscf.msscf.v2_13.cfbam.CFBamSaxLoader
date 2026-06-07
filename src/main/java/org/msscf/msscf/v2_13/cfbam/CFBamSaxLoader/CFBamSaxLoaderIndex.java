@@ -99,6 +99,7 @@ public class CFBamSaxLoaderIndex
 		String attrSuffix = null;
 		String attrIsUnique = null;
 		String attrIsDbMapped = null;
+		String attrCodeVis = null;
 		String attrDefSchema = null;
 		// Index References
 		ICFBamTableObj refTable = null;
@@ -226,6 +227,15 @@ public class CFBamSaxLoaderIndex
 					}
 					attrIsDbMapped = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "CodeVis" ) ) {
+					if( attrCodeVis != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrCodeVis = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "DefSchema" ) ) {
 					if( attrDefSchema != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
@@ -265,6 +275,12 @@ public class CFBamSaxLoaderIndex
 					0,
 					"IsDbMapped" );
 			}
+			if( ( attrCodeVis == null ) || ( attrCodeVis.length() <= 0 ) ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"CodeVis" );
+			}
 
 			// Save named attributes to context
 			CFLibXmlCoreContext curContext = getParser().getCurContext();
@@ -278,6 +294,7 @@ public class CFBamSaxLoaderIndex
 			curContext.putNamedValue( "Suffix", attrSuffix );
 			curContext.putNamedValue( "IsUnique", attrIsUnique );
 			curContext.putNamedValue( "IsDbMapped", attrIsDbMapped );
+			curContext.putNamedValue( "CodeVis", attrCodeVis );
 			curContext.putNamedValue( "DefSchema", attrDefSchema );
 
 			// Convert string attributes to native Java types
@@ -338,6 +355,9 @@ public class CFBamSaxLoaderIndex
 					"Unexpected IsDbMapped value, must be one of true, false, yes, no, 1, or 0, not \"" + attrIsDbMapped + "\"" );
 			}
 			editBuff.setRequiredIsDbMapped( natIsDbMapped );
+
+			ICFBamSchema.CodeVisibilityEnum natCodeVis = CFBamSchema.parseCodeVisibilityEnum( attrCodeVis );
+			editBuff.setRequiredCodeVis( natCodeVis );
 
 			// Get the scope/container object
 
@@ -426,6 +446,7 @@ public class CFBamSaxLoaderIndex
 						editIndex.setOptionalSuffix( editBuff.getOptionalSuffix() );
 						editIndex.setRequiredIsUnique( editBuff.getRequiredIsUnique() );
 						editIndex.setRequiredIsDbMapped( editBuff.getRequiredIsDbMapped() );
+						editIndex.setRequiredCodeVis( editBuff.getRequiredCodeVis() );
 						editIndex.setOptionalLookupDefSchema( editBuff.getOptionalLookupDefSchema() );
 						break;
 					case Replace:

@@ -102,6 +102,7 @@ public class CFBamSaxLoaderRelation
 		String attrIsXsdContainer = null;
 		String attrIsLateResolver = null;
 		String attrAllowAddendum = null;
+		String attrCodeVis = null;
 		String attrDefSchema = null;
 		String attrFromIndex = null;
 		String attrToTable = null;
@@ -264,6 +265,15 @@ public class CFBamSaxLoaderRelation
 					}
 					attrAllowAddendum = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "CodeVis" ) ) {
+					if( attrCodeVis != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrCodeVis = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "DefSchema" ) ) {
 					if( attrDefSchema != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
@@ -357,6 +367,12 @@ public class CFBamSaxLoaderRelation
 					0,
 					"AllowAddendum" );
 			}
+			if( ( attrCodeVis == null ) || ( attrCodeVis.length() <= 0 ) ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"CodeVis" );
+			}
 			if( ( attrFromIndex == null ) || ( attrFromIndex.length() <= 0 ) ) {
 				throw new CFLibNullArgumentException( getClass(),
 					S_ProcName,
@@ -391,6 +407,7 @@ public class CFBamSaxLoaderRelation
 			curContext.putNamedValue( "IsXsdContainer", attrIsXsdContainer );
 			curContext.putNamedValue( "IsLateResolver", attrIsLateResolver );
 			curContext.putNamedValue( "AllowAddendum", attrAllowAddendum );
+			curContext.putNamedValue( "CodeVis", attrCodeVis );
 			curContext.putNamedValue( "DefSchema", attrDefSchema );
 			curContext.putNamedValue( "FromIndex", attrFromIndex );
 			curContext.putNamedValue( "ToTable", attrToTable );
@@ -486,6 +503,9 @@ public class CFBamSaxLoaderRelation
 					"Unexpected AllowAddendum value, must be one of true, false, yes, no, 1, or 0, not \"" + attrAllowAddendum + "\"" );
 			}
 			editBuff.setRequiredAllowAddendum( natAllowAddendum );
+
+			ICFBamSchema.CodeVisibilityEnum natCodeVis = CFBamSchema.parseCodeVisibilityEnum( attrCodeVis );
+			editBuff.setRequiredCodeVis( natCodeVis );
 
 			// Get the scope/container object
 
@@ -641,6 +661,7 @@ public class CFBamSaxLoaderRelation
 						editRelation.setRequiredIsXsdContainer( editBuff.getRequiredIsXsdContainer() );
 						editRelation.setRequiredIsLateResolver( editBuff.getRequiredIsLateResolver() );
 						editRelation.setRequiredAllowAddendum( editBuff.getRequiredAllowAddendum() );
+						editRelation.setRequiredCodeVis( editBuff.getRequiredCodeVis() );
 						editRelation.setOptionalLookupDefSchema( editBuff.getOptionalLookupDefSchema() );
 						editRelation.setRequiredLookupFromIndex( editBuff.getRequiredLookupFromIndex() );
 						editRelation.setRequiredLookupToTable( editBuff.getRequiredLookupToTable() );
