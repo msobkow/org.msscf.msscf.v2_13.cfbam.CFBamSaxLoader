@@ -96,6 +96,7 @@ public class CFBamSaxLoaderDbKeyHash256Gen
 		String attrIsNullable = null;
 		String attrGenerateId = null;
 		String attrImplementsPolymorph = null;
+		String attrCodeVis = null;
 		String attrDefSchema = null;
 		// Value References
 		ICFBamTenantObj refTenant = null;
@@ -238,6 +239,15 @@ public class CFBamSaxLoaderDbKeyHash256Gen
 					}
 					attrImplementsPolymorph = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "CodeVis" ) ) {
+					if( attrCodeVis != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrCodeVis = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "DefSchema" ) ) {
 					if( attrDefSchema != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
@@ -322,6 +332,12 @@ public class CFBamSaxLoaderDbKeyHash256Gen
 					0,
 					"ImplementsPolymorph" );
 			}
+			if( ( attrCodeVis == null ) || ( attrCodeVis.length() <= 0 ) ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"CodeVis" );
+			}
 			if( ( attrSlice == null ) || ( attrSlice.length() <= 0 ) ) {
 				throw new CFLibNullArgumentException( getClass(),
 					S_ProcName,
@@ -347,6 +363,7 @@ public class CFBamSaxLoaderDbKeyHash256Gen
 			curContext.putNamedValue( "IsNullable", attrIsNullable );
 			curContext.putNamedValue( "GenerateId", attrGenerateId );
 			curContext.putNamedValue( "ImplementsPolymorph", attrImplementsPolymorph );
+			curContext.putNamedValue( "CodeVis", attrCodeVis );
 			curContext.putNamedValue( "DefSchema", attrDefSchema );
 			curContext.putNamedValue( "DbName", attrDbName );
 			curContext.putNamedValue( "InitValue", attrInitValue );
@@ -426,6 +443,9 @@ public class CFBamSaxLoaderDbKeyHash256Gen
 					"Unexpected ImplementsPolymorph value, must be one of true, false, yes, no, 1, or 0, not \"" + attrImplementsPolymorph + "\"" );
 			}
 			editBuff.setRequiredImplementsPolymorph( natImplementsPolymorph );
+
+			ICFBamSchema.CodeVisibilityEnum natCodeVis = CFBamSchema.parseCodeVisibilityEnum( attrCodeVis );
+			editBuff.setRequiredCodeVis( natCodeVis );
 
 			String natDbName = attrDbName;
 			editBuff.setOptionalDbName( natDbName );
@@ -542,6 +562,7 @@ public class CFBamSaxLoaderDbKeyHash256Gen
 						editDbKeyHash256Gen.setRequiredIsNullable( editBuff.getRequiredIsNullable() );
 						editDbKeyHash256Gen.setOptionalGenerateId( editBuff.getOptionalGenerateId() );
 						editDbKeyHash256Gen.setRequiredImplementsPolymorph( editBuff.getRequiredImplementsPolymorph() );
+						editDbKeyHash256Gen.setRequiredCodeVis( editBuff.getRequiredCodeVis() );
 						editDbKeyHash256Gen.setOptionalDbName( editBuff.getOptionalDbName() );
 						editDbKeyHash256Gen.setOptionalInitValue( editBuff.getOptionalInitValue() );
 						editDbKeyHash256Gen.setRequiredSlice( editBuff.getRequiredSlice() );

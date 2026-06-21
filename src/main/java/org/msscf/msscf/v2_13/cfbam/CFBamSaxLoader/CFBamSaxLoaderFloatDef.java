@@ -96,6 +96,7 @@ public class CFBamSaxLoaderFloatDef
 		String attrIsNullable = null;
 		String attrGenerateId = null;
 		String attrImplementsPolymorph = null;
+		String attrCodeVis = null;
 		String attrDefSchema = null;
 		// Value References
 		ICFBamTenantObj refTenant = null;
@@ -231,6 +232,15 @@ public class CFBamSaxLoaderFloatDef
 					}
 					attrImplementsPolymorph = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "CodeVis" ) ) {
+					if( attrCodeVis != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrCodeVis = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "DefSchema" ) ) {
 					if( attrDefSchema != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
@@ -306,6 +316,12 @@ public class CFBamSaxLoaderFloatDef
 					0,
 					"ImplementsPolymorph" );
 			}
+			if( ( attrCodeVis == null ) || ( attrCodeVis.length() <= 0 ) ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"CodeVis" );
+			}
 
 			// Save named attributes to context
 			CFLibXmlCoreContext curContext = getParser().getCurContext();
@@ -319,6 +335,7 @@ public class CFBamSaxLoaderFloatDef
 			curContext.putNamedValue( "IsNullable", attrIsNullable );
 			curContext.putNamedValue( "GenerateId", attrGenerateId );
 			curContext.putNamedValue( "ImplementsPolymorph", attrImplementsPolymorph );
+			curContext.putNamedValue( "CodeVis", attrCodeVis );
 			curContext.putNamedValue( "DefSchema", attrDefSchema );
 			curContext.putNamedValue( "DbName", attrDbName );
 			curContext.putNamedValue( "InitValue", attrInitValue );
@@ -397,6 +414,9 @@ public class CFBamSaxLoaderFloatDef
 					"Unexpected ImplementsPolymorph value, must be one of true, false, yes, no, 1, or 0, not \"" + attrImplementsPolymorph + "\"" );
 			}
 			editBuff.setRequiredImplementsPolymorph( natImplementsPolymorph );
+
+			ICFBamSchema.CodeVisibilityEnum natCodeVis = CFBamSchema.parseCodeVisibilityEnum( attrCodeVis );
+			editBuff.setRequiredCodeVis( natCodeVis );
 
 			String natDbName = attrDbName;
 			editBuff.setOptionalDbName( natDbName );
@@ -514,6 +534,7 @@ public class CFBamSaxLoaderFloatDef
 						editFloatDef.setRequiredIsNullable( editBuff.getRequiredIsNullable() );
 						editFloatDef.setOptionalGenerateId( editBuff.getOptionalGenerateId() );
 						editFloatDef.setRequiredImplementsPolymorph( editBuff.getRequiredImplementsPolymorph() );
+						editFloatDef.setRequiredCodeVis( editBuff.getRequiredCodeVis() );
 						editFloatDef.setOptionalDbName( editBuff.getOptionalDbName() );
 						editFloatDef.setOptionalInitValue( editBuff.getOptionalInitValue() );
 						editFloatDef.setOptionalMinValue( editBuff.getOptionalMinValue() );

@@ -96,6 +96,7 @@ public class CFBamSaxLoaderTimestampDef
 		String attrIsNullable = null;
 		String attrGenerateId = null;
 		String attrImplementsPolymorph = null;
+		String attrCodeVis = null;
 		String attrDefSchema = null;
 		// Value References
 		ICFBamTenantObj refTenant = null;
@@ -229,6 +230,15 @@ public class CFBamSaxLoaderTimestampDef
 					}
 					attrImplementsPolymorph = attrs.getValue( idxAttr );
 				}
+				else if( attrLocalName.equals( "CodeVis" ) ) {
+					if( attrCodeVis != null ) {
+						throw new CFLibUniqueIndexViolationException( getClass(),
+							S_ProcName,
+							S_LocalName,
+							attrLocalName );
+					}
+					attrCodeVis = attrs.getValue( idxAttr );
+				}
 				else if( attrLocalName.equals( "DefSchema" ) ) {
 					if( attrDefSchema != null ) {
 						throw new CFLibUniqueIndexViolationException( getClass(),
@@ -286,6 +296,12 @@ public class CFBamSaxLoaderTimestampDef
 					0,
 					"ImplementsPolymorph" );
 			}
+			if( ( attrCodeVis == null ) || ( attrCodeVis.length() <= 0 ) ) {
+				throw new CFLibNullArgumentException( getClass(),
+					S_ProcName,
+					0,
+					"CodeVis" );
+			}
 
 			// Save named attributes to context
 			CFLibXmlCoreContext curContext = getParser().getCurContext();
@@ -299,6 +315,7 @@ public class CFBamSaxLoaderTimestampDef
 			curContext.putNamedValue( "IsNullable", attrIsNullable );
 			curContext.putNamedValue( "GenerateId", attrGenerateId );
 			curContext.putNamedValue( "ImplementsPolymorph", attrImplementsPolymorph );
+			curContext.putNamedValue( "CodeVis", attrCodeVis );
 			curContext.putNamedValue( "DefSchema", attrDefSchema );
 			curContext.putNamedValue( "DbName", attrDbName );
 			curContext.putNamedValue( "Dummy", attrDummy );
@@ -375,6 +392,9 @@ public class CFBamSaxLoaderTimestampDef
 					"Unexpected ImplementsPolymorph value, must be one of true, false, yes, no, 1, or 0, not \"" + attrImplementsPolymorph + "\"" );
 			}
 			editBuff.setRequiredImplementsPolymorph( natImplementsPolymorph );
+
+			ICFBamSchema.CodeVisibilityEnum natCodeVis = CFBamSchema.parseCodeVisibilityEnum( attrCodeVis );
+			editBuff.setRequiredCodeVis( natCodeVis );
 
 			String natDbName = attrDbName;
 			editBuff.setOptionalDbName( natDbName );
@@ -468,6 +488,7 @@ public class CFBamSaxLoaderTimestampDef
 						editTimestampDef.setRequiredIsNullable( editBuff.getRequiredIsNullable() );
 						editTimestampDef.setOptionalGenerateId( editBuff.getOptionalGenerateId() );
 						editTimestampDef.setRequiredImplementsPolymorph( editBuff.getRequiredImplementsPolymorph() );
+						editTimestampDef.setRequiredCodeVis( editBuff.getRequiredCodeVis() );
 						editTimestampDef.setOptionalDbName( editBuff.getOptionalDbName() );
 						editTimestampDef.setOptionalDummy( editBuff.getOptionalDummy() );
 						editTimestampDef.setOptionalLookupDefSchema( editBuff.getOptionalLookupDefSchema() );
